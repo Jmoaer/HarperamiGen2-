@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HarperamiGen2</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f1ea;--card:#fffdf9;--tx:#2a2230;--mu:#7a6f80;--ac:#7b3fa0;--ac2:#c9547a;--bd:#e4dbd0;--in:#fff;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17121c;--card:#221b2a;--tx:#f1ebf5;--mu:#a99bb3;--ac:#b983e0;--ac2:#f07fa3;--bd:#372c42;--in:#2b2234;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#17121c;--card:#221b2a;--tx:#f1ebf5;--mu:#a99bb3;--ac:#b983e0;--ac2:#f07fa3;--bd:#372c42;--in:#2b2234;color-scheme:dark}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%}
+body{background:var(--bg);color:var(--tx);font-family:'Outfit',system-ui,sans-serif;background-image:radial-gradient(circle at 15% 0%,color-mix(in srgb,var(--ac) 18%,transparent),transparent 45%),radial-gradient(circle at 90% 100%,color-mix(in srgb,var(--ac2) 15%,transparent),transparent 45%);background-attachment:fixed}
+h1,h2,h3{font-family:'Cormorant Garamond',Georgia,serif;margin:0}
+#load{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:50;transition:opacity .7s,visibility .7s}
+#load.out{opacity:0;visibility:hidden}
+.logo{font-family:'Cormorant Garamond',serif;font-size:2.6rem;font-weight:700;background:linear-gradient(90deg,var(--ac),var(--ac2));-webkit-background-clip:text;background-clip:text;color:transparent;animation:rise 1s both}
+.bars{display:flex;gap:6px;height:40px;align-items:center;margin:22px 0}
+.bars i{width:6px;background:linear-gradient(var(--ac),var(--ac2));border-radius:3px;animation:eq 1s ease-in-out infinite}
+.bars i:nth-child(2){animation-delay:.15s}.bars i:nth-child(3){animation-delay:.3s}.bars i:nth-child(4){animation-delay:.45s}.bars i:nth-child(5){animation-delay:.6s}
+@keyframes eq{0%,100%{height:8px}50%{height:38px}}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.bar{width:180px;height:4px;background:var(--bd);border-radius:4px;overflow:hidden}.bar b{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--ac),var(--ac2));animation:fill 2.2s ease forwards}
+@keyframes fill{to{width:100%}}
+#app{max-width:880px;margin:0 auto;padding:20px 16px 40px}
+.pg{animation:rise .5s both}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:22px;box-shadow:0 8px 30px rgba(60,20,90,.08);margin-bottom:16px;transition:transform .25s,box-shadow .25s}
+.auth{max-width:400px;margin:6vh auto 0}.auth h2{font-size:2rem;text-align:center;margin-bottom:4px}.sub{text-align:center;color:var(--mu);margin:0 0 18px}
+label{display:block;font-size:.8rem;color:var(--mu);margin:12px 0 4px}
+input,select{width:100%;padding:11px 13px;border:1px solid var(--bd);border-radius:12px;background:var(--in);color:var(--tx);font:inherit;transition:border .2s,box-shadow .2s}
+input:focus,select:focus{outline:0;border-color:var(--ac);box-shadow:0 0 0 3px color-mix(in srgb,var(--ac) 25%,transparent)}
+button,.btn{font:inherit;font-weight:500;border:0;border-radius:12px;padding:11px 18px;cursor:pointer;background:linear-gradient(90deg,var(--ac),var(--ac2));color:#fff;transition:transform .2s,opacity .2s;text-decoration:none;display:inline-block}
+button:hover{transform:translateY(-2px)}button:active{transform:scale(.97)}
+button.g{background:transparent;color:var(--ac);border:1px solid var(--bd)}button.d{background:#c0392b}button.s{padding:7px 12px;font-size:.85rem}
+.full{width:100%;margin-top:18px}.lk{background:none;color:var(--ac);padding:4px;font-size:.88rem;border:0}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between}.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.top{display:flex;align-items:center;gap:12px;margin-bottom:16px}.top .t{flex:1}.top h3{font-size:1.5rem}.top small{color:var(--mu)}
+.av{width:46px;height:46px;border-radius:50%;object-fit:cover;background:linear-gradient(135deg,var(--ac),var(--ac2));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;flex:none}
+.av.l{width:96px;height:96px;font-size:2rem}
+.tabs{display:flex;gap:6px;margin-bottom:16px;overflow-x:auto}.tabs button{background:var(--card);color:var(--mu);border:1px solid var(--bd);white-space:nowrap}.tabs button.on{background:linear-gradient(90deg,var(--ac),var(--ac2));color:#fff}
+.song{display:flex;justify-content:space-between;align-items:center;padding:13px 14px;border:1px solid var(--bd);border-radius:12px;margin-top:8px;cursor:pointer;transition:all .25s;background:var(--in)}
+.song:hover{border-color:var(--ac);transform:translateX(4px)}.song.on{border-color:var(--ac2)}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}.chips button{padding:6px 14px;font-size:.85rem;background:var(--in);color:var(--tx);border:1px solid var(--bd)}.chips button.on{background:linear-gradient(90deg,var(--ac),var(--ac2));color:#fff}
+video{width:100%;border-radius:14px;background:#000;max-height:60vh}
+.m{padding:14px;border:1px solid var(--bd);border-radius:12px;margin-top:10px;background:var(--in)}.m .row{align-items:flex-start}.m p{margin:4px 0 0;font-size:.85rem;color:var(--mu)}
+#toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,30px);background:var(--tx);color:var(--bg);padding:11px 18px;border-radius:30px;opacity:0;transition:.4s;z-index:60;pointer-events:none}#toast.on{opacity:1;transform:translate(-50%,0)}
+input[type=file]{padding:6px;cursor:pointer}input[type=file]::file-selector-button{background:linear-gradient(90deg,var(--ac),var(--ac2));color:#fff;border:0;border-radius:10px;padding:10px 14px;margin-right:10px;font:inherit;cursor:pointer}.hint{font-size:.78rem;color:var(--mu);margin:6px 0 0}.mu{color:var(--mu);font-size:.9rem}.vs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+</style></head><body>
+<div id="load"><div class="logo">HarperamiGen2</div><div class="bars"><i></i><i></i><i></i><i></i><i></i></div><div class="bar"><b></b></div></div>
+<div id="app"></div><div id="toast"></div>
+<script>
+const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const VP=['soprano','alto','tenor','bass'],cap=s=>s[0].toUpperCase()+s.slice(1);
+let D=null;try{D=JSON.parse(localStorage.getItem('hg2'))}catch(e){}
+D=D||{users:[],songs:[],admin:{name:'Admin',user:'admin',pass:'admin123',photo:''}};
+const save=()=>{try{localStorage.setItem('hg2',JSON.stringify(D))}catch(e){toast('Storage is full')}};
+const idb=new Promise(r=>{try{const q=indexedDB.open('hg2v',1);q.onupgradeneeded=()=>q.result.createObjectStore('v');q.onsuccess=()=>r(q.result);q.onerror=()=>r(null)}catch(e){r(null)}});
+const vop=async(m,k,b)=>{const d=await idb;if(!d)return null;return new Promise(r=>{const o=d.transaction('v',m==='get'?'readonly':'readwrite').objectStore('v');const q=m==='put'?o.put(b,k):m==='del'?o.delete(k):o.get(k);q.onsuccess=()=>r(q.result||null);q.onerror=()=>r(null)})};
+let me=null,tab='',sel=null,part='',url='';
+const toast=t=>{const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),2400)};
+const go=h=>{$('#app').innerHTML='<div class="pg">'+h+'</div>'};
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const av=(o,c='')=>o.photo?`<img class="av ${c}" src="${o.photo}" alt="">`:`<div class="av ${c}">${esc((o.name||'?')[0].toUpperCase())}</div>`;
+const val=id=>$('#'+id)?.value.trim()||'';
+const photo=f=>new Promise(r=>{const fr=new FileReader();fr.onerror=()=>r('');fr.onload=()=>{const i=new Image;i.onload=()=>{const c=document.createElement('canvas');c.width=c.height=128;const s=Math.min(i.width,i.height);c.getContext('2d').drawImage(i,(i.width-s)/2,(i.height-s)/2,s,s,0,0,128,128);r(c.toDataURL('image/jpeg',.8))};i.onerror=()=>r('');i.src=fr.result};fr.readAsDataURL(f)});
+const fld=(id,l,t='text',v='')=>`<label for="${id}">${l}</label><input id="${id}" type="${t}" value="${esc(v)}">`;
+
+setTimeout(()=>{$('#load').classList.add('out');login()},2400);
+
+function login(){me=null;go(`<div class="card auth"><h2>HarperamiGen2</h2><p class="sub">Welcome to our choir family</p>${fld('u','Username')}${fld('p','Password','password')}<button class="full" onclick="doLogin()">Sign in</button><div class="row" style="margin-top:12px"><button class="lk" onclick="forgot()">Forgot password?</button><button class="lk" onclick="reg()">Register new member</button></div><button class="g full" onclick="adminLogin()">Admin</button></div>`)}
+function doLogin(){const u=D.users.find(x=>x.user.toLowerCase()===val('u').toLowerCase()&&x.pass===val('p'));if(!u)return toast('Wrong username or password');me={role:'m',id:u.id};tab='lib';home()}
+function adminLogin(){go(`<div class="card auth"><h2>Admin Access</h2><p class="sub">Private login</p>${fld('u','Admin username')}${fld('p','Admin password','password')}<button class="full" onclick="doAdmin()">Enter</button><button class="g full" onclick="login()">Back</button><p class="mu" style="text-align:center">First time? Default is admin / admin123. Change it in Profile.</p></div>`)}
+function doAdmin(){if(val('u')!==D.admin.user||val('p')!==D.admin.pass)return toast('Invalid admin login');me={role:'a'};tab='mem';home()}
+function reg(){go(`<div class="card auth"><h2>Join the Choir</h2><p class="sub">Create your member account</p>${fld('n','Full name')}${fld('u','Username')}${fld('p','Password','password')}<div class="row2"><div>${fld('b','Birthdate','date')}</div><div>${fld('a','Age','number')}</div></div>${fld('ad','Full address')}<label for="v">Voice part</label><select id="v">${VP.map(v=>`<option value="${v}">${cap(v)}</option>`).join('')}</select><button class="full" onclick="doReg()">Register</button><button class="g full" onclick="login()">Back</button></div>`)}
+function doReg(){const u={id:uid(),name:val('n'),user:val('u'),pass:val('p'),birth:val('b'),age:val('a'),addr:val('ad'),voice:val('v'),photo:''};if(!u.name||!u.user||!u.pass)return toast('Name, username and password are required');if(D.users.some(x=>x.user.toLowerCase()===u.user.toLowerCase()))return toast('Username is taken');D.users.push(u);save();toast('Registered! Please sign in');login()}
+function forgot(){go(`<div class="card auth"><h2>Reset Password</h2><p class="sub">Confirm your birthdate to set a new one</p>${fld('u','Username')}${fld('b','Birthdate','date')}${fld('p','New password','password')}<button class="full" onclick="doForgot()">Reset</button><button class="g full" onclick="login()">Back</button></div>`)}
+function doForgot(){const u=D.users.find(x=>x.user.toLowerCase()===val('u').toLowerCase());if(!u||!u.birth||u.birth!==val('b')||!val('p'))return toast('Details don’t match our records');u.pass=val('p');save();toast('Password updated');login()}
+
+function home(){const a=me.role==='a',o=a?D.admin:D.users.find(x=>x.id===me.id);if(!o)return login();
+const tabs=a?[['mem','Members'],['songs','Songs'],['prof','Profile']]:[['lib','Library'],['prof','Profile']];
+go(`<div class="top">${av(o)}<div class="t"><h3>${esc(o.name)}</h3><small>${a?'Administrator':cap(o.voice||'')+' · Member'}</small></div><button class="g s" onclick="login()">Sign out</button></div><div class="tabs">${tabs.map(t=>`<button class="${tab===t[0]?'on':''}" onclick="tab='${t[0]}';home()">${t[1]}</button>`).join('')}</div><div id="body"></div>`);
+({lib,prof:()=>prof(o,a),mem,songs})[tab]()}
+
+function lib(){$('#body').innerHTML=`<div class="card"><h2>Song Library</h2>${fld('q','Search song title')}<div id="list"></div></div><div id="pl"></div>`;$('#q').oninput=list;list();if(sel)play(sel,part)}
+function list(){const q=val('q').toLowerCase(),r=D.songs.filter(s=>s.title.toLowerCase().includes(q));$('#list').innerHTML=r.length?r.map(s=>`<div class="song ${sel===s.id?'on':''}" onclick="play('${s.id}')"><b>${esc(s.title)}</b><span class="mu">${VP.filter(v=>s.v[v]).length} parts</span></div>`).join(''):'<p class="mu">No songs found.</p>'}
+async function play(id,p){sel=id;const s=D.songs.find(x=>x.id===id),m=D.users.find(x=>x.id===me.id);part=p||(s.v[m?.voice]?m.voice:VP.find(v=>s.v[v])||'soprano');list();
+$('#pl').innerHTML=`<div class="card pg"><h3>${esc(s.title)}</h3><div class="chips">${VP.map(v=>`<button class="${v===part?'on':''}" onclick="play('${id}','${v}')">${cap(v)}</button>`).join('')}</div><div id="vid"><p class="mu">Loading…</p></div></div>`;
+const b=s.v[part]?await vop('get',s.v[part]):null;if(url)URL.revokeObjectURL(url);if(!b){$('#vid').innerHTML='<p class="mu">No video uploaded for this part yet.</p>';return}
+url=URL.createObjectURL(b);$('#vid').innerHTML=`<video src="${url}" controls playsinline></video><button class="full" onclick="dl('${id}','${part}')">Download ${cap(part)} video</button>`}
+async function dl(id,p){const s=D.songs.find(x=>x.id===id),b=await vop('get',s.v[p]);if(!b)return;const f=s.title.replace(/[^\w ]/g,'')+' - '+p+'.'+(b.type.includes('webm')?'webm':'mp4');try{const d=await claude.use('downloads');if(d)await d.save({filename:f,data:b});else{const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=f;a.click()}}catch(e){if(e&&e.code!=='declined')toast('Download unavailable here')}}
+
+function prof(o,a){$('#body').innerHTML=`<div class="card"><h2>Profile Settings</h2><div class="row" style="justify-content:flex-start;margin-top:10px">${av(o,'l')}<div><label for="ph">Profile picture</label><button type="button" class="s" onclick="pick()">Choose photo</button><input type="file" id="ph" style="display:none"><p class="hint">Can’t pick a photo? Choose an icon instead:</p><div class="chips">${['🎤','🎶','🎼','🎹','🌸','⭐','🕊️','❤️'].map(e=>`<button type="button" onclick="emo('${e}')">${e}</button>`).join('')}</div></div></div>${fld('n','Full name','text',o.name)}${a?fld('u','Admin username','text',o.user):''}${a?'':`<div class="row2"><div>${fld('b','Birthdate','date',o.birth)}</div><div>${fld('ag','Age','number',o.age)}</div></div>${fld('ad','Full address','text',o.addr)}<label for="v">Voice part</label><select id="v">${VP.map(v=>`<option value="${v}" ${o.voice===v?'selected':''}>${cap(v)}</option>`).join('')}</select>`}${fld('p','New password (leave blank to keep)','password')}<button class="full" onclick="saveProf()">Save changes</button></div>`}
+function pick(){const i=document.createElement('input');i.type='file';i.accept='image/*';i.style.cssText='position:fixed;left:-9999px';i.onchange=async()=>{const f=i.files[0];i.remove();if(!f)return;toast('Reading photo…');const p=await photo(f);if(!p)return toast('Couldn’t read that picture. Try a JPG or PNG');const o=me.role==='a'?D.admin:D.users.find(x=>x.id===me.id);o.photo=p;save();toast('Photo saved');home()};document.body.appendChild(i);try{i.click()}catch(e){toast('Your viewer blocked the file picker')}}
+function emo(e){const o=me.role==='a'?D.admin:D.users.find(x=>x.id===me.id),c=document.createElement('canvas');c.width=c.height=128;const x=c.getContext('2d'),g=x.createLinearGradient(0,0,128,128);g.addColorStop(0,'#b983e0');g.addColorStop(1,'#f07fa3');x.fillStyle=g;x.fillRect(0,0,128,128);x.font='72px sans-serif';x.textAlign='center';x.textBaseline='middle';x.fillText(e,64,70);o.photo=c.toDataURL('image/png');save();toast('Icon saved');home()}
+async function prev(el){const f=el.files[0];if(!f)return;const p=await photo(f);if(!p)return toast('Couldn’t read that picture. Try a JPG or PNG');const a=document.querySelector('.av.l');if(a)a.outerHTML='<img class="av l" src="'+p+'" alt="">';toast('Photo selected — tap Save changes')}
+async function saveProf(){const a=me.role==='a',o=a?D.admin:D.users.find(x=>x.id===me.id),f=$('#ph').files[0];if(!val('n'))return toast('Name is required');o.name=val('n');if(a&&val('u'))o.user=val('u');if(!a){o.birth=val('b');o.age=val('ag');o.addr=val('ad');o.voice=val('v')}if(val('p'))o.pass=val('p');if(f){const p=await photo(f);if(!p)return toast('Couldn’t read that picture. Try a JPG or PNG');o.photo=p}save();toast('Profile saved');home()}
+
+function mem(){$('#body').innerHTML=`<div class="card"><h2>Members (${D.users.length})</h2>${D.users.length?D.users.map(u=>`<div class="m"><div class="row"><div class="row" style="justify-content:flex-start;flex-wrap:nowrap">${av(u)}<div><b>${esc(u.name)}</b> <span class="mu">@${esc(u.user)}</span><p>${cap(u.voice)} · Age ${esc(u.age||'—')} · Born ${esc(u.birth||'—')}</p><p>${esc(u.addr||'No address')}</p></div></div><button class="d s" onclick="delM('${u.id}')">Delete</button></div></div>`).join(''):'<p class="mu">No members yet.</p>'}</div>`}
+function delM(id){if(!confirm('Delete this member?'))return;D.users=D.users.filter(u=>u.id!==id);save();mem();toast('Member deleted')}
+
+function songs(){$('#body').innerHTML=`<div class="card"><h2>Add a Song</h2>${fld('t','Song title')}<div class="vs">${VP.map(v=>`<div><label>${cap(v)} video</label><input type="file" accept="video/*" id="f_${v}"></div>`).join('')}</div><button class="full" onclick="addSong()">Upload song</button></div><div class="card"><h2>Manage Songs</h2>${D.songs.map(s=>`<div class="m"><div class="row"><input id="e${s.id}" value="${esc(s.title)}" style="flex:1;min-width:140px"><button class="s" onclick="rename('${s.id}')">Save title</button><button class="d s" onclick="delS('${s.id}')">Delete</button></div><div class="vs">${VP.map(v=>`<div><label>${cap(v)} ${s.v[v]?'✓':'(none)'}</label><input type="file" accept="video/*" onchange="repl('${s.id}','${v}',this)"></div>`).join('')}</div></div>`).join('')||'<p class="mu">No songs yet.</p>'}</div>`}
+async function addSong(){const t=val('t');if(!t)return toast('Enter a title');const s={id:uid(),title:t,v:{}};toast('Uploading…');for(const v of VP){const f=$('#f_'+v).files[0];if(f){const k=s.id+v;await vop('put',k,f);s.v[v]=k}}D.songs.push(s);save();toast('Song added');songs()}
+function rename(id){const s=D.songs.find(x=>x.id===id),t=val('e'+id);if(!t)return;s.title=t;save();toast('Title updated')}
+async function repl(id,v,el){const f=el.files[0];if(!f)return;const s=D.songs.find(x=>x.id===id),k=id+v;await vop('put',k,f);s.v[v]=k;save();toast(cap(v)+' video updated');songs()}
+async function delS(id){if(!confirm('Delete this song and its videos?'))return;const s=D.songs.find(x=>x.id===id);for(const v of VP)if(s.v[v])await vop('del',s.v[v]);D.songs=D.songs.filter(x=>x.id!==id);save();songs()}
+</script></body></html>
